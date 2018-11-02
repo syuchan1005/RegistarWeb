@@ -27,9 +27,9 @@ def products_list():
     if request.method == 'GET':
         class_name = request.args.get('className')
         sql_query = "SELECT id, name, price FROM products WHERE className = {}".format(class_name)
-        result = read_query_sql(sql_query)
+        result = read_query_sql(sql_query, return_list=True)
         
-        return jsonify(result)
+        return jsonify({'data':result})
 
 @app.route('/api/products/delete', methods=['POST'])
 def products_delete():
@@ -85,12 +85,16 @@ def execute_query_sql(sql_query,values=()):
     con.commit()
     con.close()
 
-def read_query_sql(sql_query):
+def read_query_sql(sql_query, return_list=False):
     con = pyodbc.connect(r'DRIVER={SQLite3 ODBC Driver};SERVER=localhost;DATABASE=salesioFes.db;Trusted_connection=yes')
     df = pdsql.read_sql(sql_query, con)
     con.close()
-    if len(df.to_dict('records')) > 0:
-        d = df.to_dict('records')[0]
+    
+    data = df.to_dict('records')
+    if return_list:
+        return data
+    if len(data) > 0:
+        d = data[0]
         for k in d.keys():
             if not d[k] is str:
                 d[k] = str(d[k])
