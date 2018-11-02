@@ -5,7 +5,7 @@
       <div>合計: {{$store.state.product.price * amount}}円</div>
     </div>
 
-    <v-text-field class="field" v-model="amount" label="販売個数" />
+    <v-text-field class="field" type="number" v-model="amount" label="販売個数" />
 
     <v-btn block depressed class="primary" @click="() => {
       $store.commit('setAmount', amount);

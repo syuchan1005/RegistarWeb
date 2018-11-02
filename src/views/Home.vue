@@ -26,15 +26,7 @@ export default {
   },
   mounted() {
     this.$store.commit('changeBarTitle', '売上計算');
-    this.$http({
-      url: '/api/order/total',
-      params: {
-        className: this.$store.state.className,
-      },
-    }).then((res) => {
-      if (res.data === 'None') return;
-      this.total = res.data;
-    });
+    this.loadTotal();
   },
   methods: {
     deleteLast() {
@@ -48,6 +40,18 @@ export default {
         },
       }).then(() => {
         this.$store.commit('setLastProductId', -1);
+        this.loadTotal();
+      });
+    },
+    loadTotal() {
+      this.$http({
+        url: '/api/order/total',
+        params: {
+          className: this.$store.state.className,
+        },
+      }).then((res) => {
+        if (res.data === 'None') return;
+        this.total = res.data;
       });
     },
   },

@@ -14,7 +14,7 @@
             <v-card-title>商品追加</v-card-title>
             <v-card-text>
               <v-text-field label="商品名" v-model="addProductItem.name" required />
-              <v-text-field label="価格" v-model="addProductItem.price" required />
+              <v-text-field type="number" label="価格" v-model="addProductItem.price" required />
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -47,6 +47,8 @@
 </template>
 
 <script>
+import { debounce } from 'lodash';
+
 export default {
   name: 'Setting',
   data() {
@@ -68,6 +70,7 @@ export default {
         name: '',
         price: 0,
       },
+      debounceLoadProduct: undefined,
     };
   },
   computed: {
@@ -82,15 +85,20 @@ export default {
   },
   watch: {
     className: {
-      handler() {
-        this.$http({
-          url: '/api/products/list',
-          params: {
-            className: this.className,
-          },
-        }).then((res) => {
-          this.products = res.data.data;
-        });
+      handler()  {
+        if (!this.debounceLoadProduct) {
+          this.debounceLoadProduct = debounce(() => {
+            this.$http({
+              url: '/api/products/list',
+              params: {
+                className: this.className,
+              },
+            }).then((res) => {
+              this.products = res.data.data;
+            });
+          }, 600);
+        }
+        this.debounceLoadProduct();
       },
       immediate: true,
     },

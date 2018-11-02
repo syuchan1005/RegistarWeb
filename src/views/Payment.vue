@@ -4,8 +4,8 @@
       <div>合計: {{total}}円</div>
       <div>{{change >= 0 ? '不足' : 'お釣り'}}: {{Math.abs(change)}}円</div>
     </div>
-    <v-text-field class="field" v-model="receipt" label="預かり金額" />
-    <v-text-field class="field" v-model="ticket" label="食券" placeholder="食券: 0枚" />
+    <v-text-field type="number" class="field" v-model="receipt" label="預かり金額" />
+    <v-text-field type="number" class="field" v-model="ticket" label="食券" placeholder="食券: 0枚" />
 
     <v-btn block class="primary" @click="addOrder">支払い</v-btn>
   </div>
