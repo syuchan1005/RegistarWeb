@@ -7,10 +7,7 @@ import './registerServiceWorker';
 import axios from './util/AxiosMock';
 
 Vue.config.productionTip = false;
-Vue.prototype.$http = axios.create({
-  method: 'get',
-  baseURL: 'http://192.168.0.5:5000',
-});
+Vue.prototype.$http = axios.create({ method: 'get', baseURL: 'http://localhost:5000' });
 
 new Vue({
   router,

@@ -80,13 +80,23 @@ export default {
       },
     },
   },
+  watch: {
+    className: {
+      handler() {
+        this.$http({
+          url: '/api/products/list',
+          params: {
+            className: this.className,
+          },
+        }).then((res) => {
+          this.products = res.data.data;
+        });
+      },
+      immediate: true,
+    },
+  },
   mounted() {
     this.$store.commit('changeBarTitle', '設定');
-    this.$http({
-      url: '/api/products/list',
-    }).then((res) => {
-      this.products = res.data.data;
-    });
   },
   methods: {
     deleteProduct(product) {

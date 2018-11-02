@@ -2,7 +2,7 @@
   <div class="home">
     <div class="information">
       <div>売上金額: {{total.money}}円</div>
-      <div>売上個数: {{total.amount}}円</div>
+      <div>売上個数: {{total.amount}}個</div>
     </div>
 
     <v-btn block large color="primary" to="/selectprice">販売</v-btn>
@@ -32,6 +32,7 @@ export default {
         className: this.$store.state.className,
       },
     }).then((res) => {
+      if (res.data === 'None') return;
       this.total = res.data;
     });
   },

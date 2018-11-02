@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AxiosMockAdapter from 'axios-mock-adapter';
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && false) {
   /* eslint-disable-next-line */
   console.info('%cNow use AxiosMock!', 'color: red;');
   const mock = new AxiosMockAdapter(axios);

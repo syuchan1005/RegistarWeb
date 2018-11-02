@@ -40,7 +40,7 @@ export default {
         url: '/api/order/add',
         data: {
           className: this.$store.state.className,
-          productId: this.$store.state.product.id,
+          productID: this.$store.state.product.id,
           amount: this.$store.state.amount,
         },
       }).then((res) => {
